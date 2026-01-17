@@ -212,7 +212,7 @@ const Renderer = {
         }
     },
 
-    // Draw character portrait with pixel art sprite
+    // Draw character portrait with 16-bit pixel art sprite
     drawPortrait(x, y, size, color, name) {
         // Background
         this.ctx.fillStyle = Colors.BLACK;
@@ -220,41 +220,106 @@ const Renderer = {
 
         // Try to find the sprite for this character
         let sprite = null;
-        let pixelSize = 6; // Portrait scale
+        let pattern = null;
+        let palette = null;
+        let pixelSize = 3; // Portrait scale for 16-bit sprites
+        let isBoss = false;
 
-        // Check main characters
-        if (name === 'CIPHER') sprite = CharacterSprites.CIPHER;
-        else if (name === 'BLAZE') sprite = CharacterSprites.BLAZE;
-        else if (name === 'GHOST') sprite = CharacterSprites.GHOST;
-        else if (name === 'VOLT') sprite = CharacterSprites.VOLT;
+        // Check main characters (use portrait or first frame)
+        if (name === 'CIPHER') {
+            sprite = CharacterSprites.CIPHER;
+            pattern = sprite.portrait || sprite.frames.down[0];
+            palette = sprite.palette;
+        } else if (name === 'BLAZE') {
+            sprite = CharacterSprites.BLAZE;
+            pattern = sprite.frames.down[0];
+            palette = sprite.palette;
+        } else if (name === 'GHOST') {
+            sprite = CharacterSprites.GHOST;
+            pattern = sprite.frames.down[0];
+            palette = sprite.palette;
+        } else if (name === 'VOLT') {
+            sprite = CharacterSprites.VOLT;
+            pattern = sprite.frames.down[0];
+            palette = sprite.palette;
+        }
         // Check bosses
-        else if (name === 'GLITCH') { sprite = BossSprites.glitch; pixelSize = 4; }
-        else if (name === 'ARCHITECT') { sprite = BossSprites.architect; pixelSize = 4; }
-        else if (name === 'WIRETAP') { sprite = BossSprites.wiretap; pixelSize = 4; }
+        else if (name === 'GLITCH') {
+            sprite = BossSprites.glitch;
+            pattern = sprite.pattern;
+            palette = sprite.palette;
+            pixelSize = 2;
+            isBoss = true;
+        } else if (name === 'ARCHITECT') {
+            sprite = BossSprites.architect;
+            pattern = sprite.pattern;
+            palette = sprite.palette;
+            pixelSize = 2;
+            isBoss = true;
+        } else if (name === 'WIRETAP') {
+            sprite = BossSprites.wiretap;
+            pattern = sprite.pattern;
+            palette = sprite.palette;
+            pixelSize = 2;
+            isBoss = true;
+        }
         // Check NPCs by name matching
-        else if (name.includes('Martinez')) sprite = NPCSprites.martinez;
-        else if (name.includes('Park')) sprite = NPCSprites.park;
-        else if (name.includes('Santos')) sprite = NPCSprites.santos;
-        else if (name.includes('Chen')) sprite = NPCSprites.chen;
-        else if (name.includes('Okonkwo')) sprite = NPCSprites.okonkwo;
-        else if (name.includes('Williams')) sprite = NPCSprites.williams;
-        else if (name.includes('Kim')) sprite = NPCSprites.kim;
-        else if (name.includes('Rodriguez')) sprite = NPCSprites.rodriguez;
-        else if (name.includes('Morgan')) sprite = NPCSprites.morgan;
+        else if (name.includes('Martinez')) {
+            sprite = NPCSprites.martinez;
+            pattern = sprite.pattern || GenericNPCPattern;
+            palette = sprite.palette;
+        } else if (name.includes('Park')) {
+            sprite = NPCSprites.park;
+            pattern = sprite.pattern || GenericNPCPattern;
+            palette = sprite.palette;
+        } else if (name.includes('Santos')) {
+            sprite = NPCSprites.santos;
+            pattern = sprite.pattern || GenericNPCPattern;
+            palette = sprite.palette;
+        } else if (name.includes('Chen')) {
+            sprite = NPCSprites.chen;
+            pattern = GenericNPCPattern;
+            palette = sprite.palette;
+        } else if (name.includes('Okonkwo')) {
+            sprite = NPCSprites.okonkwo;
+            pattern = GenericNPCPattern;
+            palette = sprite.palette;
+        } else if (name.includes('Williams')) {
+            sprite = NPCSprites.williams;
+            pattern = GenericNPCPattern;
+            palette = sprite.palette;
+        } else if (name.includes('Kim')) {
+            sprite = NPCSprites.kim;
+            pattern = GenericNPCPattern;
+            palette = sprite.palette;
+        } else if (name.includes('Rodriguez')) {
+            sprite = NPCSprites.rodriguez;
+            pattern = GenericNPCPattern;
+            palette = sprite.palette;
+        } else if (name.includes('Morgan')) {
+            sprite = NPCSprites.morgan;
+            pattern = GenericNPCPattern;
+            palette = sprite.palette;
+        }
 
-        if (sprite && sprite.pattern) {
+        if (pattern && palette) {
             // Draw pixel art portrait
-            const spriteWidth = sprite.pattern[0].length * pixelSize;
-            const spriteHeight = sprite.pattern.length * pixelSize;
+            const spriteWidth = pattern[0].length * pixelSize;
+            const spriteHeight = pattern.length * pixelSize;
             const spriteX = x + (size - spriteWidth) / 2;
             const spriteY = y + (size - spriteHeight) / 2;
 
             // Draw background with character color
-            this.ctx.fillStyle = color + '33';
+            const bgColor = palette.body ? palette.body[2] : color;
+            this.ctx.fillStyle = bgColor + '44';
             this.ctx.fillRect(x + 2, y + 2, size - 4, size - 4);
 
-            // Draw the pixel art
-            drawPixelPattern(this.ctx, sprite.pattern, spriteX, spriteY, pixelSize, sprite);
+            // Draw the pixel art using 16-bit function
+            if (isBoss) {
+                drawBossPattern(this.ctx, pattern, spriteX, spriteY, pixelSize, palette);
+            } else {
+                draw16BitPattern(this.ctx, pattern, spriteX, spriteY, pixelSize, palette);
+            }
         } else {
             // Fallback to colored rectangle with initial
             this.ctx.fillStyle = color;

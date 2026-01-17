@@ -6,6 +6,8 @@ const Audio = {
     // Audio elements
     music: {},
     sfx: {},
+    currentAudio: null,
+    currentTrackName: null,
 
     // Current state
     currentMusic: null,
@@ -13,18 +15,18 @@ const Audio = {
     sfxVolume: 1.0,
     muted: false,
 
-    // Track definitions (placeholder paths - replace with real audio later)
+    // Track definitions - using actual MP4 audio files
     musicTracks: {
-        'title': 'assets/audio/title_theme.mp3',
-        'world_map': 'assets/audio/world_map.mp3',
-        'city_tutorial': 'assets/audio/city_tutorial.mp3',
-        'city_purdue': 'assets/audio/city_purdue.mp3',
-        'city_protocol': 'assets/audio/city_protocol.mp3',
-        'battle': 'assets/audio/battle.mp3',
-        'boss_battle': 'assets/audio/boss_battle.mp3',
-        'victory': 'assets/audio/victory.mp3',
-        'defeat': 'assets/audio/defeat.mp3',
-        'cutscene': 'assets/audio/cutscene.mp3'
+        'title': '../audio/Intro.mp4',
+        'world_map': '../audio/World Map - Clockwork Ashes.mp4',
+        'city_tutorial': '../audio/Intro.mp4',
+        'city_purdue': '../audio/Intro.mp4',
+        'city_protocol': '../audio/Intro.mp4',
+        'battle': '../audio/Intro.mp4',
+        'boss_battle': '../audio/Intro.mp4',
+        'victory': '../audio/Intro.mp4',
+        'defeat': '../audio/Intro.mp4',
+        'cutscene': '../audio/Intro.mp4'
     },
 
     sfxSounds: {
@@ -85,45 +87,65 @@ const Audio = {
     playMusic(trackName) {
         if (this.muted) return;
 
+        // Don't restart if already playing the same track
+        if (this.currentTrackName === trackName && this.currentAudio && !this.currentAudio.paused) {
+            return;
+        }
+
         // Stop current music
         this.stopMusic();
 
-        // In placeholder mode, just log
-        console.log(`[Audio] Playing music: ${trackName}`);
-        this.currentMusic = trackName;
+        const trackPath = this.musicTracks[trackName];
+        if (trackPath) {
+            console.log(`[Audio] Playing music: ${trackName} from ${trackPath}`);
 
-        // When real audio is added:
-        /*
-        const track = this.music[trackName];
-        if (track) {
-            track.volume = this.musicVolume;
-            track.currentTime = 0;
-            track.play().catch(e => console.warn('Music autoplay blocked:', e));
-            this.currentMusic = track;
+            this.currentAudio = new window.Audio(trackPath);
+            this.currentAudio.volume = this.musicVolume;
+            this.currentAudio.loop = true;
+            this.currentTrackName = trackName;
+
+            this.currentAudio.play().catch(e => {
+                console.warn('Music autoplay blocked:', e);
+                // Add click listener to start music on user interaction
+                const startMusic = () => {
+                    if (this.currentAudio) {
+                        this.currentAudio.play().catch(() => {});
+                    }
+                    document.removeEventListener('click', startMusic);
+                    document.removeEventListener('keydown', startMusic);
+                };
+                document.addEventListener('click', startMusic);
+                document.addEventListener('keydown', startMusic);
+            });
+
+            this.currentMusic = trackName;
+        } else {
+            console.log(`[Audio] Track not found: ${trackName}`);
         }
-        */
     },
 
     // Stop current music
     stopMusic() {
-        if (this.currentMusic && typeof this.currentMusic !== 'string') {
-            this.currentMusic.pause();
-            this.currentMusic.currentTime = 0;
+        if (this.currentAudio) {
+            this.currentAudio.pause();
+            this.currentAudio.currentTime = 0;
+            this.currentAudio = null;
         }
         this.currentMusic = null;
+        this.currentTrackName = null;
     },
 
     // Pause music
     pauseMusic() {
-        if (this.currentMusic && typeof this.currentMusic !== 'string') {
-            this.currentMusic.pause();
+        if (this.currentAudio) {
+            this.currentAudio.pause();
         }
     },
 
     // Resume music
     resumeMusic() {
-        if (this.currentMusic && typeof this.currentMusic !== 'string') {
-            this.currentMusic.play().catch(e => console.warn('Resume failed:', e));
+        if (this.currentAudio) {
+            this.currentAudio.play().catch(e => console.warn('Resume failed:', e));
         }
     },
 
@@ -148,8 +170,8 @@ const Audio = {
     // Set music volume (0-1)
     setMusicVolume(volume) {
         this.musicVolume = Utils.clamp(volume, 0, 1);
-        if (this.currentMusic && typeof this.currentMusic !== 'string') {
-            this.currentMusic.volume = this.musicVolume;
+        if (this.currentAudio) {
+            this.currentAudio.volume = this.musicVolume;
         }
     },
 
