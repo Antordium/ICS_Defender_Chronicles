@@ -2,6 +2,36 @@
 // ICS DEFENDER CHRONICLES - MAP SYSTEM
 // ============================================
 
+// Power Plant Environment Decorations
+const PlantDecorations = {
+    // Control panel patterns (4x4 tiles)
+    controlPanel: [
+        [1, 1, 1, 1],
+        [2, 3, 3, 2],
+        [2, 4, 4, 2],
+        [1, 1, 1, 1]
+    ],
+    // Pipe patterns
+    pipeHorizontal: { color: '#666688', width: 8 },
+    pipeVertical: { color: '#666688', width: 8 },
+    // Industrial equipment colors
+    colors: {
+        metal: '#4a4a5e',
+        metalDark: '#2a2a3e',
+        metalLight: '#6a6a7e',
+        warning: '#ffcc00',
+        danger: '#ff4444',
+        safe: '#44ff44',
+        pipe: '#666688',
+        console: '#1a2a3a',
+        screen: '#003322',
+        screenGlow: '#00ff88',
+        cable: '#222233',
+        reactor: '#00ffff',
+        coolant: '#0088ff'
+    }
+};
+
 // World Map Data
 const WorldMapData = {
     width: 16,
@@ -375,82 +405,236 @@ const MapManager = {
 
     // Draw city tile
     drawCityTile(x, y, tile, tileX, tileY, gameState) {
-        // Base floor
-        Renderer.ctx.fillStyle = '#1a1a2e';
+        const C = PlantDecorations.colors;
+        const time = Date.now();
+
+        // Base industrial floor with checker pattern
+        if ((tileX + tileY) % 2 === 0) {
+            Renderer.ctx.fillStyle = '#1a1a2e';
+        } else {
+            Renderer.ctx.fillStyle = '#1e1e32';
+        }
         Renderer.ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+
+        // Add floor details based on position
+        this.drawFloorDetails(x, y, tileX, tileY, time);
 
         switch (tile) {
             case TileType.WALL:
-                Renderer.ctx.fillStyle = '#2a2a4e';
+                // Industrial wall with panels
+                Renderer.ctx.fillStyle = C.metalDark;
                 Renderer.ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
 
-                // Wall detail
-                Renderer.ctx.strokeStyle = '#3a3a6e';
-                Renderer.ctx.lineWidth = 2;
-                Renderer.ctx.strokeRect(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+                // Metal panel effect
+                Renderer.ctx.fillStyle = C.metal;
+                Renderer.ctx.fillRect(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+
+                // Rivets in corners
+                Renderer.ctx.fillStyle = C.metalLight;
+                Renderer.ctx.fillRect(x + 4, y + 4, 3, 3);
+                Renderer.ctx.fillRect(x + TILE_SIZE - 7, y + 4, 3, 3);
+                Renderer.ctx.fillRect(x + 4, y + TILE_SIZE - 7, 3, 3);
+                Renderer.ctx.fillRect(x + TILE_SIZE - 7, y + TILE_SIZE - 7, 3, 3);
+
+                // Random wall decorations
+                if ((tileX * 7 + tileY * 13) % 5 === 0) {
+                    // Warning stripe
+                    Renderer.ctx.fillStyle = C.warning;
+                    for (let i = 0; i < 4; i++) {
+                        Renderer.ctx.fillRect(x + 4 + i * 8, y + TILE_SIZE - 6, 4, 4);
+                    }
+                } else if ((tileX * 3 + tileY * 11) % 7 === 0) {
+                    // Vent grate
+                    Renderer.ctx.fillStyle = '#1a1a1a';
+                    Renderer.ctx.fillRect(x + 8, y + 8, TILE_SIZE - 16, TILE_SIZE - 16);
+                    for (let i = 0; i < 3; i++) {
+                        Renderer.ctx.fillStyle = C.metalDark;
+                        Renderer.ctx.fillRect(x + 8, y + 10 + i * 5, TILE_SIZE - 16, 2);
+                    }
+                } else if ((tileX * 5 + tileY * 9) % 11 === 0) {
+                    // Control box
+                    Renderer.ctx.fillStyle = C.console;
+                    Renderer.ctx.fillRect(x + 6, y + 6, TILE_SIZE - 12, TILE_SIZE - 12);
+                    // Status lights
+                    const lightColor = Math.sin(time / 500) > 0 ? C.safe : C.danger;
+                    Renderer.ctx.fillStyle = lightColor;
+                    Renderer.ctx.fillRect(x + 10, y + 10, 4, 4);
+                    Renderer.ctx.fillStyle = C.safe;
+                    Renderer.ctx.fillRect(x + 18, y + 10, 4, 4);
+                }
+                break;
+
+            case TileType.FLOOR:
+                // Add cables on some floor tiles
+                if ((tileX * 11 + tileY * 17) % 13 === 0) {
+                    Renderer.ctx.strokeStyle = C.cable;
+                    Renderer.ctx.lineWidth = 3;
+                    Renderer.ctx.beginPath();
+                    Renderer.ctx.moveTo(x, y + TILE_SIZE / 2);
+                    Renderer.ctx.lineTo(x + TILE_SIZE, y + TILE_SIZE / 2);
+                    Renderer.ctx.stroke();
+                }
                 break;
 
             case TileType.SAVE_POINT:
-                // Glowing save point
-                const pulse = Math.sin(Date.now() / 300) * 0.3 + 0.7;
-                Renderer.ctx.fillStyle = `rgba(0, 255, 255, ${pulse * 0.3})`;
-                Renderer.ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+                // Industrial terminal/save point
+                Renderer.ctx.fillStyle = C.console;
+                Renderer.ctx.fillRect(x + 4, y + 4, TILE_SIZE - 8, TILE_SIZE - 8);
 
-                Renderer.ctx.fillStyle = Colors.SECONDARY;
-                Renderer.ctx.font = 'bold 20px "Courier New", monospace';
+                // Screen
+                const pulse = Math.sin(time / 300) * 0.3 + 0.7;
+                Renderer.ctx.fillStyle = C.screen;
+                Renderer.ctx.fillRect(x + 6, y + 6, TILE_SIZE - 12, TILE_SIZE - 16);
+
+                // Screen glow effect
+                Renderer.ctx.shadowColor = C.screenGlow;
+                Renderer.ctx.shadowBlur = 10;
+                Renderer.ctx.fillStyle = `rgba(0, 255, 136, ${pulse * 0.8})`;
+                Renderer.ctx.font = 'bold 14px "Courier New", monospace';
                 Renderer.ctx.textAlign = 'center';
                 Renderer.ctx.textBaseline = 'middle';
-                Renderer.ctx.fillText('S', x + TILE_SIZE / 2, y + TILE_SIZE / 2);
+                Renderer.ctx.fillText('SAVE', x + TILE_SIZE / 2, y + TILE_SIZE / 2 - 4);
+                Renderer.ctx.shadowBlur = 0;
+
+                // Keyboard
+                Renderer.ctx.fillStyle = C.metalDark;
+                Renderer.ctx.fillRect(x + 8, y + TILE_SIZE - 10, TILE_SIZE - 16, 6);
                 break;
 
             case TileType.BOSS_DOOR:
                 const allTalked = this.npcs.every(npc => npc.talked);
 
-                if (allTalked) {
-                    // Unlocked door - pulsing
-                    const doorPulse = Math.sin(Date.now() / 200) * 0.2 + 0.8;
-                    Renderer.ctx.fillStyle = `rgba(255, 0, 255, ${doorPulse * 0.5})`;
-                    Renderer.ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+                // Heavy blast door
+                Renderer.ctx.fillStyle = C.metalDark;
+                Renderer.ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
 
-                    Renderer.ctx.fillStyle = '#ff00ff';
+                if (allTalked) {
+                    // Unlocked - glowing danger door
+                    const doorPulse = Math.sin(time / 200) * 0.3 + 0.7;
+                    Renderer.ctx.fillStyle = `rgba(255, 0, 100, ${doorPulse * 0.6})`;
+                    Renderer.ctx.fillRect(x + 4, y + 2, TILE_SIZE - 8, TILE_SIZE - 4);
+
+                    // Warning stripes
+                    Renderer.ctx.fillStyle = C.danger;
+                    for (let i = 0; i < 6; i++) {
+                        Renderer.ctx.fillRect(x + 6 + i * 4, y + 4, 2, 4);
+                    }
+
+                    // Skull/danger icon
+                    Renderer.ctx.fillStyle = '#ff0066';
+                    Renderer.ctx.font = 'bold 18px "Courier New", monospace';
+                    Renderer.ctx.textAlign = 'center';
+                    Renderer.ctx.textBaseline = 'middle';
+                    Renderer.ctx.fillText('☠', x + TILE_SIZE / 2, y + TILE_SIZE / 2);
                 } else {
                     // Locked door
-                    Renderer.ctx.fillStyle = '#660066';
+                    Renderer.ctx.fillStyle = '#440044';
+                    Renderer.ctx.fillRect(x + 4, y + 2, TILE_SIZE - 8, TILE_SIZE - 4);
+
+                    // Lock icon
+                    Renderer.ctx.fillStyle = '#666';
+                    Renderer.ctx.fillRect(x + 12, y + 14, 8, 8);
+                    Renderer.ctx.strokeStyle = '#666';
+                    Renderer.ctx.lineWidth = 2;
+                    Renderer.ctx.beginPath();
+                    Renderer.ctx.arc(x + 16, y + 13, 4, Math.PI, 0);
+                    Renderer.ctx.stroke();
                 }
 
-                Renderer.ctx.fillRect(x + 4, y + 2, TILE_SIZE - 8, TILE_SIZE - 4);
-
                 // Door frame
-                Renderer.ctx.strokeStyle = '#ff00ff';
-                Renderer.ctx.lineWidth = 2;
-                Renderer.ctx.strokeRect(x + 4, y + 2, TILE_SIZE - 8, TILE_SIZE - 4);
-
-                // Boss icon
-                Renderer.ctx.fillStyle = allTalked ? '#fff' : '#888';
-                Renderer.ctx.font = 'bold 16px "Courier New", monospace';
-                Renderer.ctx.textAlign = 'center';
-                Renderer.ctx.textBaseline = 'middle';
-                Renderer.ctx.fillText('!', x + TILE_SIZE / 2, y + TILE_SIZE / 2);
+                Renderer.ctx.strokeStyle = allTalked ? '#ff0066' : '#660066';
+                Renderer.ctx.lineWidth = 3;
+                Renderer.ctx.strokeRect(x + 2, y + 1, TILE_SIZE - 4, TILE_SIZE - 2);
                 break;
 
             case TileType.EXIT:
-                // Exit marker
-                Renderer.ctx.fillStyle = '#00ff00';
-                Renderer.ctx.fillRect(x + 8, y, TILE_SIZE - 16, TILE_SIZE);
-
+                // Industrial exit door
                 Renderer.ctx.fillStyle = '#004400';
+                Renderer.ctx.fillRect(x + 6, y, TILE_SIZE - 12, TILE_SIZE);
+
+                // Exit sign above
+                Renderer.ctx.fillStyle = C.safe;
+                Renderer.ctx.fillRect(x + 8, y + 4, TILE_SIZE - 16, 8);
+                Renderer.ctx.fillStyle = '#002200';
+                Renderer.ctx.font = 'bold 6px "Courier New", monospace';
+                Renderer.ctx.textAlign = 'center';
+                Renderer.ctx.fillText('EXIT', x + TILE_SIZE / 2, y + 10);
+
+                // Door handle
+                Renderer.ctx.fillStyle = C.metalLight;
+                Renderer.ctx.fillRect(x + TILE_SIZE - 12, y + TILE_SIZE / 2 - 2, 4, 8);
+
+                // Arrow pointing down
+                Renderer.ctx.fillStyle = C.safe;
                 Renderer.ctx.beginPath();
-                Renderer.ctx.moveTo(x + TILE_SIZE / 2, y + 8);
-                Renderer.ctx.lineTo(x + TILE_SIZE / 2 - 8, y + 20);
-                Renderer.ctx.lineTo(x + TILE_SIZE / 2 + 8, y + 20);
+                Renderer.ctx.moveTo(x + TILE_SIZE / 2, y + TILE_SIZE - 8);
+                Renderer.ctx.lineTo(x + TILE_SIZE / 2 - 6, y + TILE_SIZE - 16);
+                Renderer.ctx.lineTo(x + TILE_SIZE / 2 + 6, y + TILE_SIZE - 16);
                 Renderer.ctx.closePath();
                 Renderer.ctx.fill();
                 break;
         }
 
-        // Grid lines
-        Renderer.ctx.strokeStyle = 'rgba(0, 255, 136, 0.05)';
+        // Grid lines (subtle)
+        Renderer.ctx.strokeStyle = 'rgba(0, 255, 136, 0.03)';
         Renderer.ctx.lineWidth = 1;
         Renderer.ctx.strokeRect(x, y, TILE_SIZE, TILE_SIZE);
+    },
+
+    // Draw floor decorations and details
+    drawFloorDetails(x, y, tileX, tileY, time) {
+        const C = PlantDecorations.colors;
+
+        // Occasional floor markings
+        if ((tileX * 7 + tileY * 3) % 17 === 0) {
+            // Hazard stripes
+            Renderer.ctx.fillStyle = 'rgba(255, 204, 0, 0.2)';
+            for (let i = 0; i < 4; i++) {
+                Renderer.ctx.fillRect(x + i * 8, y + TILE_SIZE - 4, 4, 4);
+            }
+        }
+
+        // Floor drain/grate
+        if ((tileX * 13 + tileY * 7) % 23 === 0) {
+            Renderer.ctx.fillStyle = '#0a0a1a';
+            Renderer.ctx.fillRect(x + 10, y + 10, 12, 12);
+            Renderer.ctx.strokeStyle = '#2a2a3e';
+            Renderer.ctx.lineWidth = 1;
+            for (let i = 0; i < 3; i++) {
+                Renderer.ctx.beginPath();
+                Renderer.ctx.moveTo(x + 12, y + 12 + i * 4);
+                Renderer.ctx.lineTo(x + 20, y + 12 + i * 4);
+                Renderer.ctx.stroke();
+            }
+        }
+
+        // Pipe shadows on floor
+        if (tileY === 6 || tileY === 7) {
+            Renderer.ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+            Renderer.ctx.fillRect(x, y, TILE_SIZE, 4);
+        }
+
+        // Occasional cable conduit
+        if ((tileX + tileY) % 8 === 0 && tileY > 2 && tileY < 12) {
+            Renderer.ctx.strokeStyle = C.cable;
+            Renderer.ctx.lineWidth = 2;
+            Renderer.ctx.setLineDash([4, 4]);
+            Renderer.ctx.beginPath();
+            Renderer.ctx.moveTo(x, y + 16);
+            Renderer.ctx.lineTo(x + TILE_SIZE, y + 16);
+            Renderer.ctx.stroke();
+            Renderer.ctx.setLineDash([]);
+        }
+
+        // Blinking floor light
+        if ((tileX * 5 + tileY * 11) % 19 === 0) {
+            const blink = Math.sin(time / 1000 + tileX) > 0.5;
+            if (blink) {
+                Renderer.ctx.fillStyle = 'rgba(0, 255, 136, 0.3)';
+                Renderer.ctx.beginPath();
+                Renderer.ctx.arc(x + TILE_SIZE / 2, y + TILE_SIZE / 2, 3, 0, Math.PI * 2);
+                Renderer.ctx.fill();
+            }
+        }
     }
 };
