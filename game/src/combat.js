@@ -418,9 +418,9 @@ const CombatSystem = {
             Renderer.ctx.fillText(lines[i], 40, qBoxY + 20 + i * 20);
         }
 
-        // Answer options
-        const optY = 310;
-        const optHeight = 30;
+        // Answer options (positioned above HP bar area)
+        const optY = 300;
+        const optHeight = 28;
 
         for (let i = 0; i < q.options.length; i++) {
             const y = optY + i * (optHeight + 5);
@@ -568,19 +568,19 @@ const CombatSystem = {
         Renderer.ctx.fillText('Press [Z] to return to city', CANVAS_WIDTH / 2, 290 + bounce);
     },
 
-    // Draw party HP
+    // Draw party HP (positioned at very bottom to avoid overlap with answers)
     drawPartyHP(gameState) {
         const x = 20;
-        const y = CANVAS_HEIGHT - 30;
+        const y = CANVAS_HEIGHT - 8;
 
         Renderer.ctx.fillStyle = Colors.TEXT;
-        Renderer.ctx.font = '14px "Courier New", monospace';
+        Renderer.ctx.font = '12px "Courier New", monospace';
         Renderer.ctx.textAlign = 'left';
-        Renderer.ctx.fillText('PARTY HP:', x, y - 20);
+        Renderer.ctx.fillText('PARTY HP:', x, y - 10);
 
-        Renderer.drawHPBar(x + 90, y - 22, 150, 16, gameState.partyHP, Combat.MAX_PARTY_HP);
+        Renderer.drawHPBar(x + 80, y - 12, 140, 14, gameState.partyHP, Combat.MAX_PARTY_HP);
 
-        Renderer.ctx.fillText(`${gameState.partyHP}/${Combat.MAX_PARTY_HP}`, x + 250, y - 20);
+        Renderer.ctx.fillText(`${gameState.partyHP}/${Combat.MAX_PARTY_HP}`, x + 230, y - 10);
     }
 };
 

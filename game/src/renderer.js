@@ -212,27 +212,68 @@ const Renderer = {
         }
     },
 
-    // Draw character portrait placeholder
+    // Draw character portrait with pixel art sprite
     drawPortrait(x, y, size, color, name) {
         // Background
         this.ctx.fillStyle = Colors.BLACK;
         this.ctx.fillRect(x, y, size, size);
 
-        // Character color
-        this.ctx.fillStyle = color;
-        this.ctx.fillRect(x + 4, y + 4, size - 8, size - 8);
+        // Try to find the sprite for this character
+        let sprite = null;
+        let pixelSize = 6; // Portrait scale
 
-        // Border
-        this.ctx.strokeStyle = Colors.PRIMARY;
+        // Check main characters
+        if (name === 'CIPHER') sprite = CharacterSprites.CIPHER;
+        else if (name === 'BLAZE') sprite = CharacterSprites.BLAZE;
+        else if (name === 'GHOST') sprite = CharacterSprites.GHOST;
+        else if (name === 'VOLT') sprite = CharacterSprites.VOLT;
+        // Check bosses
+        else if (name === 'GLITCH') { sprite = BossSprites.glitch; pixelSize = 4; }
+        else if (name === 'ARCHITECT') { sprite = BossSprites.architect; pixelSize = 4; }
+        else if (name === 'WIRETAP') { sprite = BossSprites.wiretap; pixelSize = 4; }
+        // Check NPCs by name matching
+        else if (name.includes('Martinez')) sprite = NPCSprites.martinez;
+        else if (name.includes('Park')) sprite = NPCSprites.park;
+        else if (name.includes('Santos')) sprite = NPCSprites.santos;
+        else if (name.includes('Chen')) sprite = NPCSprites.chen;
+        else if (name.includes('Okonkwo')) sprite = NPCSprites.okonkwo;
+        else if (name.includes('Williams')) sprite = NPCSprites.williams;
+        else if (name.includes('Kim')) sprite = NPCSprites.kim;
+        else if (name.includes('Rodriguez')) sprite = NPCSprites.rodriguez;
+        else if (name.includes('Morgan')) sprite = NPCSprites.morgan;
+
+        if (sprite && sprite.pattern) {
+            // Draw pixel art portrait
+            const spriteWidth = sprite.pattern[0].length * pixelSize;
+            const spriteHeight = sprite.pattern.length * pixelSize;
+            const spriteX = x + (size - spriteWidth) / 2;
+            const spriteY = y + (size - spriteHeight) / 2;
+
+            // Draw background with character color
+            this.ctx.fillStyle = color + '33';
+            this.ctx.fillRect(x + 2, y + 2, size - 4, size - 4);
+
+            // Draw the pixel art
+            drawPixelPattern(this.ctx, sprite.pattern, spriteX, spriteY, pixelSize, sprite);
+        } else {
+            // Fallback to colored rectangle with initial
+            this.ctx.fillStyle = color;
+            this.ctx.fillRect(x + 4, y + 4, size - 8, size - 8);
+
+            this.ctx.fillStyle = Colors.TEXT;
+            this.ctx.font = 'bold 24px "Courier New", monospace';
+            this.ctx.textAlign = 'center';
+            this.ctx.textBaseline = 'middle';
+            this.ctx.fillText(name[0], x + size / 2, y + size / 2);
+        }
+
+        // Border with glow
+        this.ctx.shadowColor = color;
+        this.ctx.shadowBlur = 5;
+        this.ctx.strokeStyle = color;
         this.ctx.lineWidth = 2;
         this.ctx.strokeRect(x, y, size, size);
-
-        // Name initial
-        this.ctx.fillStyle = Colors.TEXT;
-        this.ctx.font = 'bold 24px "Courier New", monospace';
-        this.ctx.textAlign = 'center';
-        this.ctx.textBaseline = 'middle';
-        this.ctx.fillText(name[0], x + size / 2, y + size / 2);
+        this.ctx.shadowBlur = 0;
     },
 
     // Draw tile
