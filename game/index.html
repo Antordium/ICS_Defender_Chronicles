@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICS Defender Chronicles</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="game-canvas" width="512" height="448"></canvas>
+
+        <!-- HUD Overlay -->
+        <div id="hud" class="hidden">
+            <div id="location-display"></div>
+        </div>
+
+        <!-- Video Overlay for Cutscenes -->
+        <div id="video-overlay" class="hidden">
+            <video id="cutscene-video">
+                <source src="" type="video/mp4">
+            </video>
+            <button id="skip-video">Skip Video</button>
+        </div>
+
+        <!-- Loading Screen -->
+        <div id="loading-screen">
+            <h1>ICS DEFENDER CHRONICLES</h1>
+            <p>Loading...</p>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Controls Info -->
+    <div id="controls-info">
+        <p><strong>Controls:</strong> Arrow Keys = Move | Z = Confirm/Action | X = Cancel/Back | Enter = Start/Menu</p>
+    </div>
+
+    <!-- Game Scripts -->
+    <script src="src/constants.js"></script>
+    <script src="src/utils.js"></script>
+    <script src="src/input.js"></script>
+    <script src="src/audio.js"></script>
+    <script src="src/saves.js"></script>
+    <script src="src/renderer.js"></script>
+    <script src="src/sprites.js"></script>
+    <script src="src/dialogue.js"></script>
+    <script src="src/combat.js"></script>
+    <script src="src/maps.js"></script>
+    <script src="src/game.js"></script>
+    <script src="src/main.js"></script>
+</body>
+</html>

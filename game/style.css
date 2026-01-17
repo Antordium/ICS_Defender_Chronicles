@@ -1,0 +1,167 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0a0a0f;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Courier New', monospace;
+    color: #00ff88;
+}
+
+#game-container {
+    position: relative;
+    width: 512px;
+    height: 448px;
+    border: 4px solid #00ff88;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3),
+                inset 0 0 20px rgba(0, 255, 136, 0.1);
+    background: #000;
+}
+
+#game-canvas {
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+#hud {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 8px;
+    pointer-events: none;
+}
+
+#hud.hidden {
+    display: none;
+}
+
+#location-display {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #00ff88;
+    padding: 4px 12px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+#video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+#video-overlay.hidden {
+    display: none;
+}
+
+#cutscene-video {
+    max-width: 100%;
+    max-height: 90%;
+}
+
+#skip-video {
+    margin-top: 10px;
+    padding: 8px 24px;
+    background: #00ff88;
+    color: #000;
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#skip-video:hover {
+    background: #00cc6a;
+    transform: scale(1.05);
+}
+
+#loading-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2a 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+
+#loading-screen h1 {
+    font-size: 24px;
+    text-shadow: 0 0 10px #00ff88;
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+}
+
+#loading-screen p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.loading-bar {
+    width: 200px;
+    height: 8px;
+    background: #1a1a2a;
+    border: 1px solid #00ff88;
+    overflow: hidden;
+}
+
+.loading-progress {
+    width: 0%;
+    height: 100%;
+    background: #00ff88;
+    transition: width 0.3s;
+}
+
+#controls-info {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid #00ff88;
+    font-size: 12px;
+}
+
+/* Scanline effect (optional) */
+#game-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1) 0px,
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 10;
+}

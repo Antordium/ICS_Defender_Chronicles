@@ -1,0 +1,412 @@
+{
+  "city": "tutorial",
+  "cityName": "Power Plant Alpha",
+  "description": "ICS/SCADA Overview - Understanding the Basics",
+  "learningObjectives": [
+    "Define ICS, SCADA, DCS, and PLC terminology",
+    "Identify differences between IT and OT environments",
+    "Recognize common ICS components (HMI, Historian, RTU, PLC)",
+    "Understand the cyber-physical relationship",
+    "Identify ICS industries (power, water, oil/gas, manufacturing)"
+  ],
+  "questions": [
+    {
+      "id": "TUT001",
+      "type": "multiple_choice",
+      "difficulty": 1,
+      "concept": "ICS Definition",
+      "question": "What does ICS stand for?",
+      "options": [
+        "Industrial Control Systems",
+        "Internet Control Services",
+        "Integrated Computer Security",
+        "Internal Communication Standards"
+      ],
+      "correctIndex": 0,
+      "explanation": "ICS stands for Industrial Control Systems - the systems that control physical processes in critical infrastructure like power plants, water treatment, and manufacturing.",
+      "enemyTaunt": "You don't even know what ICS stands for?! How are you supposed to defend it? ICS = Industrial Control Systems. Remember that!"
+    },
+    {
+      "id": "TUT002",
+      "type": "multiple_choice",
+      "difficulty": 1,
+      "concept": "SCADA Definition",
+      "question": "What does SCADA stand for?",
+      "options": [
+        "Supervisory Control and Data Acquisition",
+        "System Control and Data Analysis",
+        "Security Control and Data Authentication",
+        "Standard Computer and Data Architecture"
+      ],
+      "correctIndex": 0,
+      "explanation": "SCADA = Supervisory Control and Data Acquisition. It's a type of ICS used to monitor and control distributed assets, commonly in utilities.",
+      "enemyTaunt": "SCADA = Supervisory Control and Data Acquisition! It's literally in every ICS training. How did you miss that?"
+    },
+    {
+      "id": "TUT003",
+      "type": "multiple_choice",
+      "difficulty": 1,
+      "concept": "PLC Function",
+      "question": "Which device directly controls physical processes like valves and motors?",
+      "options": [
+        "PLC (Programmable Logic Controller)",
+        "HMI (Human Machine Interface)",
+        "Firewall",
+        "Database Server"
+      ],
+      "correctIndex": 0,
+      "explanation": "PLCs are the 'brains' that directly control physical processes. They read sensor inputs and control actuators like valves, motors, and pumps.",
+      "enemyTaunt": "PLCs are the brains of industrial control! They're what I target to cause REAL damage. You should know this!"
+    },
+    {
+      "id": "TUT004",
+      "type": "multiple_choice",
+      "difficulty": 2,
+      "concept": "IT vs OT Priorities",
+      "question": "In OT (Operational Technology) environments, which priority is typically MOST important?",
+      "options": [
+        "Availability",
+        "Confidentiality",
+        "Integrity",
+        "Authentication"
+      ],
+      "correctIndex": 0,
+      "explanation": "OT prioritizes Availability - systems must stay running to prevent physical consequences. Unlike IT where confidentiality often comes first, a power plant can't just 'go offline' without serious impact.",
+      "enemyTaunt": "OT = Availability first! If a power plant goes down, people suffer. That's why I love targeting it - maximum impact!"
+    },
+    {
+      "id": "TUT005",
+      "type": "multiple_choice",
+      "difficulty": 1,
+      "concept": "HMI Function",
+      "question": "What is the main function of an HMI (Human Machine Interface)?",
+      "options": [
+        "Provide a visual interface for operators to monitor and control systems",
+        "Store historical process data",
+        "Connect networks together",
+        "Generate electricity"
+      ],
+      "correctIndex": 0,
+      "explanation": "HMI = Human Machine Interface - the screens operators use to monitor process data and control industrial systems. It's the 'face' of the control system.",
+      "enemyTaunt": "HMI is the Human Machine Interface - the screens operators stare at all day. If I compromise that, they won't know what's real!"
+    },
+    {
+      "id": "TUT006",
+      "type": "true_false",
+      "difficulty": 2,
+      "concept": "IT vs OT",
+      "question": "True or False: ICS networks typically prioritize availability over confidentiality.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correctIndex": 0,
+      "explanation": "TRUE - Unlike IT systems, OT systems must stay running. Downtime can have physical consequences like power outages, equipment damage, or even safety incidents.",
+      "enemyTaunt": "It's TRUE! OT prioritizes uptime over secrets. That's basic knowledge. The CIA triad is flipped in ICS!"
+    },
+    {
+      "id": "TUT007",
+      "type": "multiple_choice",
+      "difficulty": 2,
+      "concept": "ICS Attack History",
+      "question": "Which cyberattack targeted the Ukrainian power grid in 2015, causing widespread blackouts?",
+      "options": [
+        "BlackEnergy",
+        "Stuxnet",
+        "WannaCry",
+        "NotPetya"
+      ],
+      "correctIndex": 0,
+      "explanation": "BlackEnergy malware was used in the 2015 Ukraine power grid attack, cutting power to approximately 230,000 customers. It was one of the first confirmed cyberattacks on a power grid.",
+      "enemyTaunt": "BlackEnergy! The Ukraine attack was legendary - 230,000 people in the dark. That's the power of ICS hacking!"
+    },
+    {
+      "id": "TUT008",
+      "type": "multiple_choice",
+      "difficulty": 2,
+      "concept": "Historian Function",
+      "question": "What type of system records historical process data for trending and analysis?",
+      "options": [
+        "Historian",
+        "PLC",
+        "RTU",
+        "Firewall"
+      ],
+      "correctIndex": 0,
+      "explanation": "A Historian server stores time-series data from ICS/SCADA systems for trending, analysis, and compliance reporting. It's essential for understanding process behavior over time.",
+      "enemyTaunt": "The Historian stores all the process data! Great for reconnaissance if I can access it. You need to protect those!"
+    },
+    {
+      "id": "TUT009",
+      "type": "multiple_choice",
+      "difficulty": 1,
+      "concept": "RTU Definition",
+      "question": "RTU stands for:",
+      "options": [
+        "Remote Terminal Unit",
+        "Real Time Update",
+        "Router Transfer Unit",
+        "Registered Technical User"
+      ],
+      "correctIndex": 0,
+      "explanation": "RTU = Remote Terminal Unit - used for remote monitoring and control, especially in geographically distributed systems like power grids and pipelines.",
+      "enemyTaunt": "RTU = Remote Terminal Unit. They're in substations, pump stations, everywhere remote. Perfect targets for me!"
+    },
+    {
+      "id": "TUT010",
+      "type": "multiple_choice",
+      "difficulty": 1,
+      "concept": "ICS Industries",
+      "question": "Which industry would NOT typically use ICS/SCADA systems?",
+      "options": [
+        "Retail point-of-sale",
+        "Power generation",
+        "Water treatment",
+        "Oil and gas"
+      ],
+      "correctIndex": 0,
+      "explanation": "Retail POS is IT, not OT. ICS/SCADA is used in industries with physical processes to control - power generation, water treatment, oil & gas, manufacturing, transportation, etc.",
+      "enemyTaunt": "Retail POS is regular IT! ICS is for industries that control PHYSICAL things. Know your battlefield!"
+    },
+    {
+      "id": "TUT011",
+      "type": "multiple_choice",
+      "difficulty": 2,
+      "concept": "ICS Components",
+      "question": "Which component would you typically find at the field level of an ICS architecture?",
+      "options": [
+        "Sensors and actuators",
+        "Enterprise database",
+        "Web server",
+        "Email server"
+      ],
+      "correctIndex": 0,
+      "explanation": "Sensors and actuators are field devices that interface directly with the physical process - sensors measure things (temperature, pressure, flow) and actuators do things (open valves, start motors).",
+      "enemyTaunt": "Sensors and actuators are the field devices! They're at the bottom of the architecture, touching the physical process. Basic stuff!"
+    },
+    {
+      "id": "TUT012",
+      "type": "multiple_choice",
+      "difficulty": 2,
+      "concept": "Cyber-Physical",
+      "question": "What makes ICS security different from traditional IT security?",
+      "options": [
+        "Attacks can cause physical damage or safety incidents",
+        "ICS systems are always air-gapped",
+        "ICS systems don't use networks",
+        "ICS systems are too old to hack"
+      ],
+      "correctIndex": 0,
+      "explanation": "ICS security is unique because cyber attacks can have physical consequences - equipment damage, environmental harm, or even loss of life. This cyber-physical connection is what makes ICS security critical.",
+      "enemyTaunt": "PHYSICAL DAMAGE is what makes ICS hacking so powerful! I can cause real-world chaos from a keyboard. That's the difference!"
+    },
+    {
+      "id": "TUT013",
+      "type": "multiple_choice",
+      "difficulty": 1,
+      "concept": "DCS Definition",
+      "question": "What does DCS stand for in industrial control?",
+      "options": [
+        "Distributed Control System",
+        "Data Center Security",
+        "Digital Communication Standard",
+        "Device Configuration Service"
+      ],
+      "correctIndex": 0,
+      "explanation": "DCS = Distributed Control System - a type of ICS commonly used in process industries like chemical plants and refineries where continuous processes need to be controlled.",
+      "enemyTaunt": "DCS = Distributed Control System! It's another flavor of ICS, usually in chemical plants and refineries. Know your targets!"
+    },
+    {
+      "id": "TUT014",
+      "type": "multiple_choice",
+      "difficulty": 2,
+      "concept": "ICS Lifespan",
+      "question": "How long do ICS/SCADA systems typically remain in operation compared to IT systems?",
+      "options": [
+        "15-25 years (much longer than IT)",
+        "1-2 years (much shorter than IT)",
+        "The same as IT systems (3-5 years)",
+        "6 months (replaced very frequently)"
+      ],
+      "correctIndex": 0,
+      "explanation": "ICS systems often operate for 15-25 years or more - much longer than typical IT systems (3-5 years). This creates security challenges as systems may run outdated, unpatched software.",
+      "enemyTaunt": "15-25 YEARS! These systems run forever without updates. That's why I find so many vulnerabilities. Legacy systems are my playground!"
+    },
+    {
+      "id": "TUT015",
+      "type": "multiple_choice",
+      "difficulty": 2,
+      "concept": "Safety Systems",
+      "question": "What is the primary purpose of a Safety Instrumented System (SIS) in ICS?",
+      "options": [
+        "Prevent dangerous conditions and protect equipment/personnel",
+        "Increase production efficiency",
+        "Store historical data",
+        "Provide remote access"
+      ],
+      "correctIndex": 0,
+      "explanation": "Safety Instrumented Systems (SIS) are designed to prevent dangerous conditions and bring processes to a safe state. They're the last line of defense against catastrophic failures.",
+      "enemyTaunt": "SIS is the safety system - it's supposed to prevent disasters. If I can bypass it... well, that's when things get really interesting!"
+    },
+    {
+      "id": "TUT016",
+      "type": "multiple_choice",
+      "difficulty": 1,
+      "concept": "ICS Attack Impact",
+      "question": "In 2021, what critical infrastructure was targeted in the Oldsmar, Florida attack?",
+      "options": [
+        "Water treatment facility",
+        "Power plant",
+        "Oil refinery",
+        "Airport"
+      ],
+      "correctIndex": 0,
+      "explanation": "The Oldsmar attack targeted a water treatment facility, where an attacker attempted to increase sodium hydroxide (lye) levels to dangerous amounts. Operators caught it in time.",
+      "enemyTaunt": "Oldsmar was a water plant! Someone tried to poison the water supply. Shows what's possible when ICS isn't secured properly!"
+    },
+    {
+      "id": "TUT017",
+      "type": "multiple_choice",
+      "difficulty": 2,
+      "concept": "PLC Programming",
+      "question": "What is the most common programming language used for PLCs?",
+      "options": [
+        "Ladder Logic",
+        "Python",
+        "JavaScript",
+        "SQL"
+      ],
+      "correctIndex": 0,
+      "explanation": "Ladder Logic is the most common PLC programming language, designed to look like electrical relay diagrams that control technicians were familiar with. Other IEC 61131-3 languages exist too.",
+      "enemyTaunt": "Ladder Logic looks like circuit diagrams - that's how PLCs are usually programmed. Know the enemy's tools!"
+    },
+    {
+      "id": "TUT018",
+      "type": "multiple_choice",
+      "difficulty": 1,
+      "concept": "ICS Terminology",
+      "question": "What does OT stand for?",
+      "options": [
+        "Operational Technology",
+        "Online Transactions",
+        "Operating Time",
+        "Output Terminal"
+      ],
+      "correctIndex": 0,
+      "explanation": "OT = Operational Technology - the hardware and software that monitors and controls physical devices, processes, and events. It's often contrasted with IT (Information Technology).",
+      "enemyTaunt": "OT = Operational Technology. It's the stuff that controls physical things. Different from IT! You really should know this by now."
+    },
+    {
+      "id": "TUT019",
+      "type": "multiple_choice",
+      "difficulty": 2,
+      "concept": "ICS Protocols",
+      "question": "Which of the following is a common ICS/SCADA communication protocol?",
+      "options": [
+        "Modbus",
+        "SMTP",
+        "FTP",
+        "HTTP"
+      ],
+      "correctIndex": 0,
+      "explanation": "Modbus is one of the most common ICS protocols, developed in 1979. It's used for communication between PLCs, HMIs, and other devices. It has no built-in security.",
+      "enemyTaunt": "Modbus is everywhere in ICS - and it has ZERO built-in security! No authentication, no encryption. Easy pickings!"
+    },
+    {
+      "id": "TUT020",
+      "type": "multiple_choice",
+      "difficulty": 2,
+      "concept": "Attack Surface",
+      "question": "Which of these increases the attack surface of an ICS network?",
+      "options": [
+        "Connecting ICS to the corporate IT network",
+        "Air-gapping the ICS network",
+        "Removing unused services",
+        "Disabling remote access"
+      ],
+      "correctIndex": 0,
+      "explanation": "Connecting ICS to corporate IT networks increases attack surface by creating paths from the internet to critical systems. The IT/OT convergence introduces new risks that must be managed.",
+      "enemyTaunt": "IT/OT convergence is my favorite trend! When you connect ICS to the business network, you connect it to ME. Thanks for the access!"
+    },
+    {
+      "id": "TUT021",
+      "type": "multiple_choice",
+      "difficulty": 1,
+      "concept": "Stuxnet",
+      "question": "Which famous malware specifically targeted industrial control systems (PLCs)?",
+      "options": [
+        "Stuxnet",
+        "Zeus",
+        "Conficker",
+        "Melissa"
+      ],
+      "correctIndex": 0,
+      "explanation": "Stuxnet (discovered 2010) was the first known malware designed to target industrial control systems. It targeted Siemens PLCs in Iranian nuclear facilities, causing physical damage to centrifuges.",
+      "enemyTaunt": "Stuxnet was the first real ICS weapon - it destroyed physical centrifuges! Changed the game forever. You should know this history!"
+    },
+    {
+      "id": "TUT022",
+      "type": "multiple_choice",
+      "difficulty": 2,
+      "concept": "Process Control",
+      "question": "In a control loop, what component takes action based on controller output?",
+      "options": [
+        "Actuator",
+        "Sensor",
+        "Historian",
+        "HMI"
+      ],
+      "correctIndex": 0,
+      "explanation": "An actuator takes action based on controller commands - it might open a valve, start a pump, or adjust a motor speed. The control loop is: Sensor reads -> Controller decides -> Actuator acts.",
+      "enemyTaunt": "Actuators DO things - they move, open, close. Sensors just watch. Know the difference in your control loops!"
+    },
+    {
+      "id": "TUT023",
+      "type": "multiple_choice",
+      "difficulty": 1,
+      "concept": "CIA Triad",
+      "question": "The CIA triad in IT stands for Confidentiality, Integrity, and ___?",
+      "options": [
+        "Availability",
+        "Authentication",
+        "Authorization",
+        "Accountability"
+      ],
+      "correctIndex": 0,
+      "explanation": "CIA = Confidentiality, Integrity, and Availability. These are the three core principles of information security, though their priority order differs between IT (CIA) and OT (AIC).",
+      "enemyTaunt": "CIA = Confidentiality, Integrity, Availability. But in OT, it's really AIC - Availability comes FIRST. Remember that!"
+    },
+    {
+      "id": "TUT024",
+      "type": "multiple_choice",
+      "difficulty": 2,
+      "concept": "Patching Challenge",
+      "question": "Why is patching ICS systems more challenging than IT systems?",
+      "options": [
+        "Downtime for patching can disrupt critical operations",
+        "ICS systems don't have any vulnerabilities",
+        "ICS vendors release patches too frequently",
+        "IT systems cannot receive patches"
+      ],
+      "correctIndex": 0,
+      "explanation": "Patching ICS is challenging because systems often can't be taken offline for updates - a power plant can't just shut down for patches. Testing is also critical to ensure patches don't disrupt processes.",
+      "enemyTaunt": "You can't just patch an ICS like a laptop! Taking systems offline means stopping operations. That's why so many stay unpatched - my advantage!"
+    },
+    {
+      "id": "TUT025",
+      "type": "multiple_choice",
+      "difficulty": 1,
+      "concept": "Critical Infrastructure",
+      "question": "Which of these is considered Critical Infrastructure in most countries?",
+      "options": [
+        "Electrical power grid",
+        "Social media platforms",
+        "Video streaming services",
+        "Online gaming servers"
+      ],
+      "correctIndex": 0,
+      "explanation": "Critical Infrastructure includes systems essential for society: power grids, water systems, transportation, healthcare, communications, financial services, etc. Their disruption would have severe consequences.",
+      "enemyTaunt": "Power grids are critical infrastructure - disrupt them and you disrupt EVERYTHING. That's why they're such valuable targets!"
+    }
+  ]
+}

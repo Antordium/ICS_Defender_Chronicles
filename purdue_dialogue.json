@@ -1,0 +1,691 @@
+{
+  "city": "purdue_city",
+  "cityName": "Water Treatment - Purdue City",
+  "introScene": {
+    "video": "videos/purdue_city/network_architecture.mp4",
+    "postVideoDialogue": [
+      {
+        "speaker": "CIPHER",
+        "portrait": "cipher_alert",
+        "text": "The Purdue Model. Six levels separating your enterprise network from your physical processes. When it works."
+      },
+      {
+        "speaker": "BLAZE",
+        "portrait": "blaze_worried",
+        "text": "And when it doesn't work?"
+      },
+      {
+        "speaker": "GHOST",
+        "portrait": "ghost_mysterious",
+        "text": "Then someone like The Architect walks right through. Level by level. IT to OT. I've seen the reconnaissance patterns - they're already inside."
+      },
+      {
+        "speaker": "VOLT",
+        "portrait": "volt_stern",
+        "text": "This facility treats water for 200,000 people. If they reach the process controls..."
+      },
+      {
+        "speaker": "CIPHER",
+        "portrait": "cipher_thinking",
+        "text": "Then we need to understand how they're moving. Talk to the staff - Chen handles the network, Okonkwo runs security, Williams operates the SCADA systems."
+      },
+      {
+        "speaker": "NARRATOR",
+        "portrait": null,
+        "text": "[You can now explore Purdue City. Learn about network architecture from the NPCs before confronting The Architect.]"
+      }
+    ]
+  },
+  "npcs": {
+    "chen": {
+      "name": "Network Admin Chen",
+      "title": "IT/OT Network Engineer",
+      "portrait": "npc_chen",
+      "location": "Network Operations Center",
+      "dialogueTrees": {
+        "initial": [
+          {
+            "speaker": "chen",
+            "text": "*surrounded by multiple monitors showing network diagrams* CyberGuard? Finally. I'm Chen, I manage both IT and OT networks here."
+          },
+          {
+            "speaker": "chen",
+            "text": "That's rare, by the way. Most places have separate teams who don't talk to each other. Recipe for disaster."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "Explain the Purdue Model to me.", "next": "purdue_model" },
+              { "text": "How should the network be segmented?", "next": "segmentation" },
+              { "text": "What's a DMZ in ICS context?", "next": "dmz" },
+              { "text": "I need to find The Architect.", "next": "ready_check" }
+            ]
+          }
+        ],
+        "purdue_model": [
+          {
+            "speaker": "chen",
+            "text": "The Purdue Model! My favorite topic. *pulls up diagram* Think of it as floors in a building."
+          },
+          {
+            "speaker": "chen",
+            "text": "Level 0 - the basement. That's your physical process. Actual water, actual pipes, actual chemicals."
+          },
+          {
+            "speaker": "chen",
+            "text": "Level 1 - ground floor. PLCs and RTUs. The controllers that directly touch Level 0."
+          },
+          {
+            "speaker": "chen",
+            "text": "Level 2 - first floor. HMIs, local control rooms. Where operators watch their screens."
+          },
+          {
+            "speaker": "VOLT",
+            "portrait": "volt_teaching",
+            "text": "That's where I spend most of my time. Level 2. Watching the process, making adjustments."
+          },
+          {
+            "speaker": "chen",
+            "text": "Level 3 - site operations. SCADA servers, historians, engineering workstations. The brains of the operation."
+          },
+          {
+            "speaker": "chen",
+            "text": "Level 3.5 - the DMZ. The security checkpoint between OT and IT."
+          },
+          {
+            "speaker": "chen",
+            "text": "Levels 4 and 5 - IT land. Enterprise networks, business systems, and the scary internet."
+          },
+          {
+            "speaker": "GHOST",
+            "portrait": "ghost_suspicious",
+            "text": "And attackers start at Level 5 and work their way down. Each level they cross gets them closer to causing physical damage."
+          },
+          {
+            "speaker": "chen",
+            "text": "Exactly why we need proper segmentation between EVERY level. Not just at the perimeter."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "Tell me more about segmentation.", "next": "segmentation" },
+              { "text": "What's the DMZ for?", "next": "dmz" },
+              { "text": "Thanks, I understand the levels now.", "next": "ready_check" }
+            ]
+          }
+        ],
+        "segmentation": [
+          {
+            "speaker": "chen",
+            "text": "Segmentation is about controlling who can talk to whom. Firewalls between every Purdue level."
+          },
+          {
+            "speaker": "chen",
+            "text": "See this? *points to network diagram* A flat network. Everything can reach everything. Attacker's paradise."
+          },
+          {
+            "speaker": "chen",
+            "text": "Now THIS *switches view* is what we implemented here. Firewalls at every boundary. Strict rules about what traffic crosses."
+          },
+          {
+            "speaker": "CIPHER",
+            "portrait": "cipher_thinking",
+            "text": "So even if someone compromises a workstation on Level 4, they can't just ping a PLC on Level 1?"
+          },
+          {
+            "speaker": "chen",
+            "text": "Correct! They'd have to pass through the Level 4 firewall, through the DMZ, through the Level 3 firewall..."
+          },
+          {
+            "speaker": "chen",
+            "text": "Each hop is a chance to detect them, block them, or at least slow them down."
+          },
+          {
+            "speaker": "chen",
+            "text": "Defense in depth. Never rely on a single control. Layers, layers, layers."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "Explain the Purdue levels again.", "next": "purdue_model" },
+              { "text": "What exactly goes in the DMZ?", "next": "dmz" },
+              { "text": "Got it. Time to hunt The Architect.", "next": "ready_check" }
+            ]
+          }
+        ],
+        "dmz": [
+          {
+            "speaker": "chen",
+            "text": "The DMZ - Demilitarized Zone - sits at Level 3.5. It's the border checkpoint between IT and OT."
+          },
+          {
+            "speaker": "chen",
+            "text": "Things that live in the DMZ: Jump servers for remote access. Patch servers. Data historians that IT needs to query."
+          },
+          {
+            "speaker": "chen",
+            "text": "The rule is simple: IT talks TO the DMZ. OT talks TO the DMZ. But IT never talks directly to OT."
+          },
+          {
+            "speaker": "BLAZE",
+            "portrait": "blaze_determined",
+            "text": "Like an airlock on a spaceship. Both doors never open at the same time."
+          },
+          {
+            "speaker": "chen",
+            "text": "Great analogy! And for really sensitive stuff, we use data diodes. Hardware that physically prevents data from flowing back into OT."
+          },
+          {
+            "speaker": "chen",
+            "text": "One-way only. Process data can flow OUT for monitoring, but nothing can flow IN to attack."
+          },
+          {
+            "speaker": "chen",
+            "text": "Can't hack what can't receive data. Physics beats hackers."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "Walk me through the Purdue levels.", "next": "purdue_model" },
+              { "text": "How does segmentation help?", "next": "segmentation" },
+              { "text": "This is good intel. Let's move.", "next": "ready_check" }
+            ]
+          }
+        ],
+        "ready_check": [
+          {
+            "speaker": "chen",
+            "text": "The Architect's been probing our network for weeks. They know our topology better than some of my own staff."
+          },
+          {
+            "speaker": "chen",
+            "text": "Talk to Okonkwo in Security - she's been tracking their lateral movement. And Williams at the SCADA station has seen some weird traffic."
+          },
+          {
+            "speaker": "chen",
+            "text": "Be careful. This one's not a script kiddie. They UNDERSTAND networks."
+          }
+        ]
+      },
+      "practiceQuestions": [
+        {
+          "question": "At which Purdue level would you find PLCs and RTUs?",
+          "options": ["Level 0", "Level 1", "Level 2", "Level 3"],
+          "correct": 1,
+          "hint": "These are 'Basic Control' devices - one level above the physical process."
+        },
+        {
+          "question": "What is the purpose of network segmentation in ICS?",
+          "options": [
+            "Increase network speed",
+            "Reduce hardware costs",
+            "Contain breaches and limit lateral movement",
+            "Simplify network management"
+          ],
+          "correct": 2,
+          "hint": "Think about what happens when an attacker gets initial access..."
+        }
+      ],
+      "completionFlag": "chen_complete"
+    },
+    "okonkwo": {
+      "name": "Security Lead Okonkwo",
+      "title": "ICS Security Architect",
+      "portrait": "npc_okonkwo",
+      "location": "Security Operations Center",
+      "dialogueTrees": {
+        "initial": [
+          {
+            "speaker": "okonkwo",
+            "text": "*studying threat feeds intently* CyberGuard. I'm Okonkwo. I've been tracking The Architect for three weeks."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "They're good. Patient. Methodical. This isn't smash-and-grab. This is a targeted intrusion."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "How do ICS attacks typically progress?", "next": "attack_path" },
+              { "text": "What's their attack surface here?", "next": "attack_surface" },
+              { "text": "How do you track lateral movement?", "next": "lateral_movement" },
+              { "text": "Where is The Architect now?", "next": "ready_check" }
+            ]
+          }
+        ],
+        "attack_path": [
+          {
+            "speaker": "okonkwo",
+            "text": "ICS attacks follow a pattern. Always. Understanding the pattern lets you predict their next move."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "Stage 1: Reconnaissance. They research the target. Public info, job postings, vendor relationships."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "Stage 2: Initial Access. Usually IT network. Phishing, compromised credentials, vulnerable external services."
+          },
+          {
+            "speaker": "GHOST",
+            "portrait": "ghost_mysterious",
+            "text": "Phishing is still king. Send enough emails, someone always clicks."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "Stage 3: Lateral Movement. They pivot through the network. IT to DMZ. DMZ to OT. Stealing credentials, exploiting trust relationships."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "Stage 4: Persistence. They establish backdoors, scheduled tasks, hidden accounts. Ways to get back in if discovered."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "Stage 5: Action on Objectives. Finally, they do what they came to do. Disrupt, destroy, ransom, steal."
+          },
+          {
+            "speaker": "CIPHER",
+            "portrait": "cipher_alert",
+            "text": "And The Architect? What stage are they at?"
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "Late Stage 3. They're in OT. We've seen them querying the historian. They're learning the process before they act."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "What's their attack surface?", "next": "attack_surface" },
+              { "text": "How did they move laterally?", "next": "lateral_movement" },
+              { "text": "We need to stop them now.", "next": "ready_check" }
+            ]
+          }
+        ],
+        "attack_surface": [
+          {
+            "speaker": "okonkwo",
+            "text": "Attack surface - everything an attacker can target. In ICS, it's growing every year."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "Remote access is the biggest risk. VPNs, jump servers, vendor connections. Every one is a potential entry point."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "IT/OT convergence expanded the surface dramatically. Used to be air-gapped. Now connected to corporate, sometimes to cloud."
+          },
+          {
+            "speaker": "VOLT",
+            "portrait": "volt_stern",
+            "text": "The business wanted real-time production data in their dashboards. So we connected things that should never have been connected."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "Then there's the obvious stuff. Internet-exposed devices. We found Modbus devices on Shodan that we didn't even know we had."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "Physical vectors too. USB drives, compromised vendor laptops, even malicious firmware in new equipment."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "The Architect got in through a vendor VPN connection. The vendor was compromised first. Supply chain attack."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "Walk me through the attack stages.", "next": "attack_path" },
+              { "text": "How are you tracking their movement?", "next": "lateral_movement" },
+              { "text": "Enough recon. Time to engage.", "next": "ready_check" }
+            ]
+          }
+        ],
+        "lateral_movement": [
+          {
+            "speaker": "okonkwo",
+            "text": "Lateral movement - how attackers spread from their initial foothold. This is where we catch them or lose them."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "The Architect is using stolen credentials. They compromised one IT account and harvested others from memory."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "They're moving through legitimate channels - RDP, file shares, PowerShell remoting. Hard to distinguish from normal admin activity."
+          },
+          {
+            "speaker": "CIPHER",
+            "portrait": "cipher_thinking",
+            "text": "Living off the land. Using tools already present in the environment."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "Exactly. No malware to trigger antivirus. Just native Windows tools used maliciously."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "We caught them because of anomalies. An engineering workstation querying every PLC at 3 AM. That's not normal."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "ICS-aware monitoring. You need tools that understand what NORMAL OT traffic looks like to spot abnormal."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "How did they get initial access?", "next": "attack_surface" },
+              { "text": "What stages do ICS attacks follow?", "next": "attack_path" },
+              { "text": "Let's end this. Where are they?", "next": "ready_check" }
+            ]
+          }
+        ],
+        "ready_check": [
+          {
+            "speaker": "okonkwo",
+            "text": "Last we tracked them, they were in the Level 3 zone. Specifically, the engineering workstation subnet."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "They're learning how the water treatment process works. Chlorine dosing, pump sequences, tank levels."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "Make sure you've talked to Williams at SCADA. He's seen their queries firsthand. He can tell you what they're after."
+          },
+          {
+            "speaker": "okonkwo",
+            "text": "And CyberGuard? Don't underestimate The Architect. They've been planning this for months."
+          }
+        ]
+      },
+      "practiceQuestions": [
+        {
+          "question": "In which stage of an ICS attack does the attacker move from IT network toward OT?",
+          "options": [
+            "Reconnaissance",
+            "Initial Access",
+            "Lateral Movement",
+            "Action on Objectives"
+          ],
+          "correct": 2,
+          "hint": "After getting initial access, they need to 'move laterally' through the network..."
+        },
+        {
+          "question": "What MOST increases the ICS attack surface?",
+          "options": [
+            "Air-gapped networks",
+            "Remote access connections without proper security",
+            "Physical security guards",
+            "Paper-based procedures"
+          ],
+          "correct": 1,
+          "hint": "Every remote connection is a potential entry point..."
+        }
+      ],
+      "completionFlag": "okonkwo_complete"
+    },
+    "williams": {
+      "name": "Operator Williams",
+      "title": "SCADA Operator",
+      "portrait": "npc_williams",
+      "location": "SCADA Control Room",
+      "dialogueTrees": {
+        "initial": [
+          {
+            "speaker": "williams",
+            "text": "*monitoring multiple SCADA screens* CyberGuard team? Good timing. Something's been querying my systems. Something that shouldn't be there."
+          },
+          {
+            "speaker": "williams",
+            "text": "I'm Williams, 12 years running SCADA here. I know what normal looks like. This ain't normal."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "What's in Level 3 that they want?", "next": "level_3" },
+              { "text": "Tell me about zones and conduits.", "next": "zones_conduits" },
+              { "text": "What queries have you seen?", "next": "queries" },
+              { "text": "Where can I find The Architect?", "next": "ready_check" }
+            ]
+          }
+        ],
+        "level_3": [
+          {
+            "speaker": "williams",
+            "text": "Level 3 is Site Operations. The crown jewels of any ICS environment."
+          },
+          {
+            "speaker": "williams",
+            "text": "SCADA servers - these coordinate everything. Collect data from all the PLCs, send commands, handle alarms."
+          },
+          {
+            "speaker": "williams",
+            "text": "Historians - store months or years of process data. Trends, events, everything. Perfect for reconnaissance."
+          },
+          {
+            "speaker": "BLAZE",
+            "portrait": "blaze_worried",
+            "text": "So an attacker with historian access can learn exactly how your process works?"
+          },
+          {
+            "speaker": "williams",
+            "text": "Bingo. Normal operating ranges, timing of batch processes, which valves control what. It's all there."
+          },
+          {
+            "speaker": "williams",
+            "text": "Engineering workstations are here too. The machines that can REPROGRAM the PLCs. Most powerful access in the plant."
+          },
+          {
+            "speaker": "GHOST",
+            "portrait": "ghost_suspicious",
+            "text": "Control the engineering workstation, control the entire process. That's what The Architect wants."
+          },
+          {
+            "speaker": "williams",
+            "text": "And they're close. I can feel it."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "Explain zones and conduits.", "next": "zones_conduits" },
+              { "text": "What queries have you seen?", "next": "queries" },
+              { "text": "We need to stop them now.", "next": "ready_check" }
+            ]
+          }
+        ],
+        "zones_conduits": [
+          {
+            "speaker": "williams",
+            "text": "IEC 62443 - the international standard for ICS security. It talks about zones and conduits."
+          },
+          {
+            "speaker": "williams",
+            "text": "Zones are groups of assets with similar security requirements. Like, all the Level 2 HMIs in one zone."
+          },
+          {
+            "speaker": "williams",
+            "text": "Conduits are the communication pathways BETWEEN zones. Every conduit is a potential attack path."
+          },
+          {
+            "speaker": "CIPHER",
+            "portrait": "cipher_teaching",
+            "text": "So you define your zones, then lock down all the conduits between them?"
+          },
+          {
+            "speaker": "williams",
+            "text": "Exactly. Each conduit gets security controls. Firewalls, authentication, monitoring."
+          },
+          {
+            "speaker": "williams",
+            "text": "If you can't justify why traffic needs to flow through a conduit, close it. Deny by default."
+          },
+          {
+            "speaker": "williams",
+            "text": "Problem is, someone left a conduit open. That's how The Architect got from IT to OT."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "What's at Level 3 they want?", "next": "level_3" },
+              { "text": "What queries are you seeing?", "next": "queries" },
+              { "text": "Let's close that conduit permanently.", "next": "ready_check" }
+            ]
+          }
+        ],
+        "queries": [
+          {
+            "speaker": "williams",
+            "text": "*pulls up logs* Look at this. 3 AM last night. Historian queries for chlorine dosing setpoints."
+          },
+          {
+            "speaker": "williams",
+            "text": "Then pump sequence timing. Then tank level thresholds. They're mapping our entire treatment process."
+          },
+          {
+            "speaker": "VOLT",
+            "portrait": "volt_alert",
+            "text": "Chlorine dosing... if they manipulate that, they could underdose and let pathogens through. Or overdose and poison people."
+          },
+          {
+            "speaker": "williams",
+            "text": "Now you understand why I'm worried. This isn't ransomware. They're not after money."
+          },
+          {
+            "speaker": "williams",
+            "text": "This morning, I saw queries to the engineering workstation. Checking if the PLC programming software was running."
+          },
+          {
+            "speaker": "williams",
+            "text": "They're getting ready to make changes. Real changes. To a real process that real people depend on."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "What's at Level 3?", "next": "level_3" },
+              { "text": "Tell me about zones and conduits.", "next": "zones_conduits" },
+              { "text": "We end this now.", "next": "ready_check" }
+            ]
+          }
+        ],
+        "ready_check": [
+          {
+            "speaker": "williams",
+            "text": "The Architect is somewhere in our Level 3 subnet. Probably bouncing between the engineering workstation and the historian."
+          },
+          {
+            "speaker": "williams",
+            "text": "You'll find them in the server room. That's where all the Level 3 equipment lives."
+          },
+          {
+            "speaker": "williams",
+            "text": "Fair warning - they know these networks better than they should. They've been studying."
+          },
+          {
+            "speaker": "NARRATOR",
+            "portrait": null,
+            "text": "[You've learned from all NPCs. The boss arena is now unlocked. Prepare to confront The Architect!]"
+          }
+        ]
+      },
+      "practiceQuestions": [
+        {
+          "question": "Which Level 3 system stores months of historical process data?",
+          "options": ["PLC", "HMI", "Historian", "RTU"],
+          "correct": 2,
+          "hint": "It's in the name - it keeps the 'history' of the process..."
+        },
+        {
+          "question": "In the zones and conduits model, what is a 'conduit'?",
+          "options": [
+            "A physical cable tray",
+            "The communication pathway between security zones",
+            "A type of sensor",
+            "A firewall appliance"
+          ],
+          "correct": 1,
+          "hint": "It's the PATH that traffic takes between zones..."
+        }
+      ],
+      "completionFlag": "williams_complete"
+    }
+  },
+  "bossIntro": {
+    "trigger": "all_npcs_complete",
+    "dialogue": [
+      {
+        "speaker": "ARCHITECT",
+        "portrait": "boss_architect_confident",
+        "text": "*appears on multiple screens simultaneously* CyberGuard. I was wondering when you'd trace my path."
+      },
+      {
+        "speaker": "ARCHITECT",
+        "portrait": "boss_architect_confident",
+        "text": "I am THE ARCHITECT. I don't break into networks. I UNDERSTAND them. Every zone. Every conduit. Every trust relationship."
+      },
+      {
+        "speaker": "GHOST",
+        "portrait": "ghost_suspicious",
+        "text": "You came through the vendor VPN. Supply chain compromise. Took your time."
+      },
+      {
+        "speaker": "ARCHITECT",
+        "portrait": "boss_architect_smug",
+        "text": "Patience is a virtue. I've spent three weeks learning this environment. Every PLC, every setpoint, every operator habit."
+      },
+      {
+        "speaker": "ARCHITECT",
+        "portrait": "boss_architect_smug",
+        "text": "Your flat network segments were helpful. Your poorly configured DMZ, even more so."
+      },
+      {
+        "speaker": "CIPHER",
+        "portrait": "cipher_determined",
+        "text": "Then let's see if you understand it as well as you think."
+      },
+      {
+        "speaker": "NARRATOR",
+        "portrait": null,
+        "text": "[BOSS BATTLE: THE ARCHITECT - Network Infiltrator] [30-second timer per question!]"
+      }
+    ]
+  },
+  "bossDefeat": {
+    "dialogue": [
+      {
+        "speaker": "ARCHITECT",
+        "portrait": "boss_architect_angry",
+        "text": "Impossible! I mapped every connection, every vulnerability, every..."
+      },
+      {
+        "speaker": "VOLT",
+        "portrait": "volt_satisfied",
+        "text": "You understood the network. But you didn't understand the PEOPLE who defend it."
+      },
+      {
+        "speaker": "ARCHITECT",
+        "portrait": "boss_architect_damaged",
+        "text": "*connection fragmenting* This changes nothing! Wiretap is already at Protocol Port. Already listening to your precious protocols..."
+      },
+      {
+        "speaker": "ARCHITECT",
+        "portrait": "boss_architect_damaged",
+        "text": "Modbus, DNP3 - no encryption, no authentication. Wiretap will read every command, forge every response..."
+      },
+      {
+        "speaker": "BLAZE",
+        "portrait": "blaze_determined",
+        "text": "Protocol Port. The oil refinery. That's our next target."
+      },
+      {
+        "speaker": "CIPHER",
+        "portrait": "cipher_thinking",
+        "text": "Protocol-level attacks. This is getting more sophisticated. We need to understand how ICS protocols work - and why they're vulnerable."
+      },
+      {
+        "speaker": "NARRATOR",
+        "portrait": null,
+        "text": "[PURDUE CITY COMPLETE - Protocol Port unlocked on world map!]"
+      }
+    ]
+  }
+}

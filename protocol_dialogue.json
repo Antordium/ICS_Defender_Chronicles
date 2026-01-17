@@ -1,0 +1,747 @@
+{
+  "city": "protocol_port",
+  "cityName": "Oil Refinery - Protocol Port",
+  "introScene": {
+    "video": "videos/protocol_port/ics_protocols.mp4",
+    "postVideoDialogue": [
+      {
+        "speaker": "VOLT",
+        "portrait": "volt_worried",
+        "text": "Modbus. DNP3. Protocols designed in the '70s and '90s. No authentication. No encryption. Just... trust."
+      },
+      {
+        "speaker": "GHOST",
+        "portrait": "ghost_mysterious",
+        "text": "I used to love these protocols. Get on the network, and you can read anything, write anything. No credentials needed."
+      },
+      {
+        "speaker": "BLAZE",
+        "portrait": "blaze_confused",
+        "text": "Wait, these protocols are still in use? In 2087? Controlling an OIL REFINERY?"
+      },
+      {
+        "speaker": "CIPHER",
+        "portrait": "cipher_grim",
+        "text": "Legacy systems. Can't replace them without rebuilding the entire facility. So we compensate with network controls."
+      },
+      {
+        "speaker": "CIPHER",
+        "portrait": "cipher_alert",
+        "text": "But Wiretap specializes in protocol exploitation. They're not breaking INTO the network - they're speaking the protocols' own language."
+      },
+      {
+        "speaker": "NARRATOR",
+        "portrait": null,
+        "text": "[You can now explore Protocol Port. Learn about ICS protocols from the NPCs before confronting Wiretap.]"
+      }
+    ]
+  },
+  "npcs": {
+    "kim": {
+      "name": "Protocol Specialist Kim",
+      "title": "Communications Engineer",
+      "portrait": "npc_kim",
+      "location": "Communications Hub",
+      "dialogueTrees": {
+        "initial": [
+          {
+            "speaker": "kim",
+            "text": "*headset on, analyzing packet captures* CyberGuard? Perfect timing. I've been watching the strangest traffic patterns."
+          },
+          {
+            "speaker": "kim",
+            "text": "I'm Kim, communications engineer. If it moves bits in this refinery, I know about it. Or I SHOULD know about it."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "Tell me about Modbus.", "next": "modbus" },
+              { "text": "What about DNP3?", "next": "dnp3" },
+              { "text": "Why are these protocols insecure?", "next": "why_insecure" },
+              { "text": "I need to find Wiretap.", "next": "ready_check" }
+            ]
+          }
+        ],
+        "modbus": [
+          {
+            "speaker": "kim",
+            "text": "Modbus! The granddaddy of ICS protocols. Developed by Modicon in 1979. Yes, 1979."
+          },
+          {
+            "speaker": "kim",
+            "text": "Simple, efficient, universal. Every PLC vendor supports it. That's why it's everywhere."
+          },
+          {
+            "speaker": "kim",
+            "text": "Modbus RTU runs over serial - RS-485 usually. Modbus TCP runs over Ethernet on port 502."
+          },
+          {
+            "speaker": "GHOST",
+            "portrait": "ghost_smirk",
+            "text": "Port 502. First thing I scan for when looking for ICS. Wide open on so many networks."
+          },
+          {
+            "speaker": "kim",
+            "text": "The problem? Modbus has ZERO security features. No authentication. No encryption. Nothing."
+          },
+          {
+            "speaker": "kim",
+            "text": "Anyone on the network can read coils, write registers, stop/start PLCs. Just need to send the right bytes."
+          },
+          {
+            "speaker": "BLAZE",
+            "portrait": "blaze_shocked",
+            "text": "And this controls REFINERIES? With no passwords?!"
+          },
+          {
+            "speaker": "kim",
+            "text": "In 1979, if you were in the control room, you were authorized. The network WAS the security. Now... not so much."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "Tell me about DNP3.", "next": "dnp3" },
+              { "text": "Why are these protocols so insecure?", "next": "why_insecure" },
+              { "text": "I've heard enough. Where's Wiretap?", "next": "ready_check" }
+            ]
+          }
+        ],
+        "dnp3": [
+          {
+            "speaker": "kim",
+            "text": "DNP3 - Distributed Network Protocol version 3. The utility industry's favorite."
+          },
+          {
+            "speaker": "kim",
+            "text": "Designed for SCADA systems with unreliable communications - think substations connected by radio or satellite."
+          },
+          {
+            "speaker": "kim",
+            "text": "It handles dropped packets, out-of-order delivery, all the problems with long-distance communications."
+          },
+          {
+            "speaker": "kim",
+            "text": "Standard port is 20000. You'll find it in power grids, water systems, pipelines - anywhere with remote sites."
+          },
+          {
+            "speaker": "CIPHER",
+            "portrait": "cipher_thinking",
+            "text": "Security features?"
+          },
+          {
+            "speaker": "kim",
+            "text": "Originally? None. But they added Secure Authentication - DNP3-SA. Challenge-response to prevent spoofing."
+          },
+          {
+            "speaker": "kim",
+            "text": "Problem is, SA is optional. Many installations don't enable it. Or they enable it but use weak keys."
+          },
+          {
+            "speaker": "kim",
+            "text": "Wiretap knows this. They're specifically targeting our DNP3 links to remote pump stations."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "Tell me about Modbus.", "next": "modbus" },
+              { "text": "Why are ICS protocols so insecure?", "next": "why_insecure" },
+              { "text": "Let's stop them. Where?", "next": "ready_check" }
+            ]
+          }
+        ],
+        "why_insecure": [
+          {
+            "speaker": "kim",
+            "text": "Why are ICS protocols insecure? Context. Historical context."
+          },
+          {
+            "speaker": "kim",
+            "text": "1979 - Modbus created. 1993 - DNP3 released. Networks were isolated. Physical access WAS authentication."
+          },
+          {
+            "speaker": "kim",
+            "text": "No internet connectivity. No remote access. If you could send commands, you were standing in the control room."
+          },
+          {
+            "speaker": "VOLT",
+            "portrait": "volt_teaching",
+            "text": "Then IT/OT convergence happened. Corporate wanted data. Remote access for vendors. Integration with business systems."
+          },
+          {
+            "speaker": "kim",
+            "text": "Suddenly these protocols designed for trusted, isolated networks were exposed to... everything."
+          },
+          {
+            "speaker": "kim",
+            "text": "And you can't just 'add security' to Modbus. The spec has no room for it. Every device would need replacement."
+          },
+          {
+            "speaker": "kim",
+            "text": "So we compensate. Network segmentation. Deep packet inspection. Protocol-aware firewalls. Monitoring."
+          },
+          {
+            "speaker": "kim",
+            "text": "We can't fix the protocols. So we protect the network they run on."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "Explain Modbus to me.", "next": "modbus" },
+              { "text": "What about DNP3?", "next": "dnp3" },
+              { "text": "Let's put that knowledge to use.", "next": "ready_check" }
+            ]
+          }
+        ],
+        "ready_check": [
+          {
+            "speaker": "kim",
+            "text": "Wiretap is somewhere in our network, capturing traffic. They've been replaying commands, testing what they can control."
+          },
+          {
+            "speaker": "kim",
+            "text": "Talk to Rodriguez in the field - he's seen some weird behavior on remote equipment. And Morgan in the SOC has been tracking the traffic patterns."
+          },
+          {
+            "speaker": "kim",
+            "text": "Watch yourself. Wiretap speaks protocol fluently. They won't just break in - they'll BE a legitimate-looking device."
+          }
+        ]
+      },
+      "practiceQuestions": [
+        {
+          "question": "What TCP port does Modbus TCP typically use?",
+          "options": ["Port 80", "Port 443", "Port 502", "Port 22"],
+          "correct": 2,
+          "hint": "It's a well-known ICS port - not a common IT port like HTTP or SSH."
+        },
+        {
+          "question": "What built-in security features does original Modbus have?",
+          "options": [
+            "Strong encryption",
+            "Username/password authentication",
+            "Certificate-based auth",
+            "None"
+          ],
+          "correct": 3,
+          "hint": "It was designed in 1979 for isolated networks..."
+        }
+      ],
+      "completionFlag": "kim_complete"
+    },
+    "rodriguez": {
+      "name": "Field Tech Rodriguez",
+      "title": "Instrument Technician",
+      "portrait": "npc_rodriguez",
+      "location": "Field Equipment Yard",
+      "dialogueTrees": {
+        "initial": [
+          {
+            "speaker": "rodriguez",
+            "text": "*wiping grease off hands* CyberGuard? Out here in the field? Must be serious."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "I'm Rodriguez. I maintain the instruments and field devices. The stuff that actually touches the process."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "Something's been messing with my equipment. Remote valves opening when they shouldn't. Setpoints changing."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "Tell me about fieldbus protocols.", "next": "fieldbus" },
+              { "text": "What about serial vs. Ethernet?", "next": "serial_ethernet" },
+              { "text": "What about wireless in ICS?", "next": "wireless" },
+              { "text": "What's Wiretap doing exactly?", "next": "ready_check" }
+            ]
+          }
+        ],
+        "fieldbus": [
+          {
+            "speaker": "rodriguez",
+            "text": "Fieldbus protocols - the ones that run at Levels 0 and 1. Connecting controllers to actual field devices."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "HART - runs over the same 4-20mA wiring as analog signals. Digital data riding on top of analog."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "Foundation Fieldbus - digital from the start. Used a lot in process industries like ours."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "Profibus - big in manufacturing and Europe. Good for high-speed automation."
+          },
+          {
+            "speaker": "VOLT",
+            "portrait": "volt_teaching",
+            "text": "These are the protocols that talk directly to sensors and actuators. The lowest level of the stack."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "Security? Same story as Modbus. These were designed for dedicated, isolated networks. Not security threats."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "But if someone gets access to the fieldbus network... they can talk directly to my valves and transmitters."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "Serial vs. Ethernet?", "next": "serial_ethernet" },
+              { "text": "What about wireless?", "next": "wireless" },
+              { "text": "What's happening with your equipment?", "next": "ready_check" }
+            ]
+          }
+        ],
+        "serial_ethernet": [
+          {
+            "speaker": "rodriguez",
+            "text": "Big shift happened over the last 20 years. Serial to Ethernet. Changed everything."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "Serial - RS-232, RS-485. Point-to-point or multidrop. Physical access usually required."
+          },
+          {
+            "speaker": "GHOST",
+            "portrait": "ghost_mysterious",
+            "text": "Serial meant I had to be ON SITE. Physically connected to that cable. Hard to attack remotely."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "Then Ethernet came to the plant floor. Same protocols - Modbus TCP, EtherNet/IP, Profinet - but over standard networking."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "Benefits were huge. Standard cabling. Standard switches. Easy integration. Remote diagnostics."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "But now an attacker doesn't need physical access. Just network access. Could be from across the world."
+          },
+          {
+            "speaker": "BLAZE",
+            "portrait": "blaze_worried",
+            "text": "So we traded physical security for... convenience?"
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "Pretty much. Now we need network security to replace what physical isolation used to give us."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "Tell me about fieldbus.", "next": "fieldbus" },
+              { "text": "What about wireless?", "next": "wireless" },
+              { "text": "I need to stop Wiretap.", "next": "ready_check" }
+            ]
+          }
+        ],
+        "wireless": [
+          {
+            "speaker": "rodriguez",
+            "text": "Wireless in ICS. Controversial topic. Some people love it, some people won't touch it."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "WirelessHART - industrial wireless protocol. Mesh networking, designed for process automation. We use it for some remote sensors."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "ISA100 - another industrial wireless standard. Similar use cases."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "Regular WiFi is out here too. Operators with tablets, maintenance laptops. Convenient but risky."
+          },
+          {
+            "speaker": "CIPHER",
+            "portrait": "cipher_alert",
+            "text": "Wireless means the attacker doesn't need to plug into anything. Just be in radio range."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "Exactly. I've found unauthorized WiFi access points out here. 'Rogue' APs someone plugged in for convenience."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "Wiretap could be anywhere. Doesn't need to be inside the fence. Just needs line of sight to our wireless."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "Tell me about fieldbus.", "next": "fieldbus" },
+              { "text": "Serial vs. Ethernet?", "next": "serial_ethernet" },
+              { "text": "Let's find them.", "next": "ready_check" }
+            ]
+          }
+        ],
+        "ready_check": [
+          {
+            "speaker": "rodriguez",
+            "text": "My equipment started acting weird three days ago. Valves moving a few percent. Flow setpoints drifting."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "Small changes. Testing what they can do. Learning the process."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "Morgan in the SOC has packet captures. She can show you exactly what Wiretap's been doing."
+          },
+          {
+            "speaker": "rodriguez",
+            "text": "Find them fast. An oil refinery isn't something you want someone playing with."
+          }
+        ]
+      },
+      "practiceQuestions": [
+        {
+          "question": "What is a key security difference between serial and Ethernet ICS communications?",
+          "options": [
+            "Serial is always encrypted",
+            "Serial requires physical access; Ethernet can be accessed remotely",
+            "Ethernet cannot carry ICS protocols",
+            "Serial has built-in authentication"
+          ],
+          "correct": 1,
+          "hint": "Think about what network connectivity enables..."
+        },
+        {
+          "question": "At which Purdue levels do fieldbus protocols typically operate?",
+          "options": [
+            "Levels 4-5",
+            "Levels 0-1",
+            "Level 3.5 DMZ",
+            "Only Level 2"
+          ],
+          "correct": 1,
+          "hint": "Fieldbus connects controllers to field devices - the lowest levels."
+        }
+      ],
+      "completionFlag": "rodriguez_complete"
+    },
+    "morgan": {
+      "name": "Analyst Morgan",
+      "title": "Network Security Analyst",
+      "portrait": "npc_morgan",
+      "location": "Security Operations Center",
+      "dialogueTrees": {
+        "initial": [
+          {
+            "speaker": "morgan",
+            "text": "*surrounded by monitors, dark circles under eyes* CyberGuard. I've been tracking Wiretap for 72 hours straight."
+          },
+          {
+            "speaker": "morgan",
+            "text": "Morgan. Network security. I analyze traffic, hunt threats, and drink too much coffee."
+          },
+          {
+            "speaker": "morgan",
+            "text": "I've got Wiretap's traffic signature. I know what they're doing. I just can't stop them yet."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "What attacks are they running?", "next": "attacks" },
+              { "text": "How do you analyze ICS traffic?", "next": "analysis" },
+              { "text": "What defenses do we have?", "next": "defenses" },
+              { "text": "Where is Wiretap now?", "next": "ready_check" }
+            ]
+          }
+        ],
+        "attacks": [
+          {
+            "speaker": "morgan",
+            "text": "Wiretap is running the classics. Man-in-the-middle. Replay attacks. Protocol spoofing."
+          },
+          {
+            "speaker": "morgan",
+            "text": "Man-in-the-middle - they've positioned themselves between a PLC and the HMI. Reading all traffic, modifying what they want."
+          },
+          {
+            "speaker": "morgan",
+            "text": "The HMI thinks it's talking to the PLC. The PLC thinks it's talking to the HMI. Both are talking to Wiretap."
+          },
+          {
+            "speaker": "GHOST",
+            "portrait": "ghost_knowing",
+            "text": "Classic MITM. No encryption means they can read and modify anything in transit."
+          },
+          {
+            "speaker": "morgan",
+            "text": "Replay attacks too. They captured legitimate 'open valve' commands and replay them at will."
+          },
+          {
+            "speaker": "morgan",
+            "text": "The PLC doesn't know the command is a recording. No timestamps, no sequence numbers in Modbus."
+          },
+          {
+            "speaker": "morgan",
+            "text": "And spoofing - forging commands that look like they come from legitimate sources. Modbus doesn't verify sender identity."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "How do you analyze this traffic?", "next": "analysis" },
+              { "text": "What defenses do we have?", "next": "defenses" },
+              { "text": "I've heard enough. Let's end this.", "next": "ready_check" }
+            ]
+          }
+        ],
+        "analysis": [
+          {
+            "speaker": "morgan",
+            "text": "Wireshark is my best friend. Packet capture and protocol analysis. Has dissectors for Modbus, DNP3, most ICS protocols."
+          },
+          {
+            "speaker": "morgan",
+            "text": "I capture traffic at key network points, then analyze for anomalies."
+          },
+          {
+            "speaker": "morgan",
+            "text": "Anomalies like... function codes that shouldn't be used. Read requests to memory ranges that contain passwords."
+          },
+          {
+            "speaker": "CIPHER",
+            "portrait": "cipher_interested",
+            "text": "So you need to know what NORMAL traffic looks like to spot ABNORMAL?"
+          },
+          {
+            "speaker": "morgan",
+            "text": "Exactly. Baseline first. Know your normal. Then deviations jump out."
+          },
+          {
+            "speaker": "morgan",
+            "text": "That engineering workstation never sends commands at 3 AM. But last night? 3 AM command burst."
+          },
+          {
+            "speaker": "morgan",
+            "text": "Wiretap thought they were being stealthy. But the traffic PATTERN gave them away."
+          },
+          {
+            "speaker": "morgan",
+            "text": "ICS-specific monitoring tools help too. They understand protocol semantics, not just packet structure."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "What attacks are they running?", "next": "attacks" },
+              { "text": "What defenses can we use?", "next": "defenses" },
+              { "text": "Show me where they are.", "next": "ready_check" }
+            ]
+          }
+        ],
+        "defenses": [
+          {
+            "speaker": "morgan",
+            "text": "Defenses against protocol attacks? Can't fix the protocols, so we protect around them."
+          },
+          {
+            "speaker": "morgan",
+            "text": "Network segmentation first. Limit who can even REACH the protocols. Micro-segmentation around critical assets."
+          },
+          {
+            "speaker": "morgan",
+            "text": "Protocol-aware firewalls. They understand ICS protocols. Can filter by function code, register range, even values."
+          },
+          {
+            "speaker": "morgan",
+            "text": "For example: 'Allow Modbus reads from HMI to PLC. Block Modbus writes from anywhere except the engineering workstation.'"
+          },
+          {
+            "speaker": "VOLT",
+            "portrait": "volt_approving",
+            "text": "Smart. The firewall understands the protocol's meaning, not just ports and IPs."
+          },
+          {
+            "speaker": "morgan",
+            "text": "Encrypted tunnels can help too. Wrap insecure protocols in VPN or TLS. The protocol is still insecure, but the tunnel isn't."
+          },
+          {
+            "speaker": "morgan",
+            "text": "And monitoring. Always monitoring. You can't prevent everything, but you CAN detect and respond quickly."
+          },
+          {
+            "speaker": "player_choice",
+            "options": [
+              { "text": "What attacks are they using?", "next": "attacks" },
+              { "text": "How do you analyze the traffic?", "next": "analysis" },
+              { "text": "Time to put this knowledge to work.", "next": "ready_check" }
+            ]
+          }
+        ],
+        "ready_check": [
+          {
+            "speaker": "morgan",
+            "text": "I've traced Wiretap's traffic to a compromised network switch in the process area. They're using it as their pivot point."
+          },
+          {
+            "speaker": "morgan",
+            "text": "All their MITM and replay attacks originate from there. Cut them off, and they lose their position."
+          },
+          {
+            "speaker": "morgan",
+            "text": "They know protocols inside and out. Be ready for trick questions - they'll try to confuse you about how these systems actually work."
+          },
+          {
+            "speaker": "NARRATOR",
+            "portrait": null,
+            "text": "[You've learned from all NPCs. The boss arena is now unlocked. Prepare to confront Wiretap!]"
+          }
+        ]
+      },
+      "practiceQuestions": [
+        {
+          "question": "What type of attack intercepts and potentially modifies communications between two parties?",
+          "options": [
+            "Denial of Service",
+            "Man-in-the-Middle",
+            "Social Engineering",
+            "Physical Intrusion"
+          ],
+          "correct": 1,
+          "hint": "The attacker sits 'in the middle' between the communicating parties..."
+        },
+        {
+          "question": "What is the MOST effective mitigation for insecure legacy ICS protocols?",
+          "options": [
+            "Ignore them",
+            "Network segmentation and monitoring",
+            "Replace all equipment immediately",
+            "Add encryption by modifying protocols"
+          ],
+          "correct": 1,
+          "hint": "Can't fix the protocols, so we protect the network around them..."
+        }
+      ],
+      "completionFlag": "morgan_complete"
+    }
+  },
+  "bossIntro": {
+    "trigger": "all_npcs_complete",
+    "dialogue": [
+      {
+        "speaker": "WIRETAP",
+        "portrait": "boss_wiretap_sneaky",
+        "text": "*voice crackling through speakers* Sssssh. Did you hear that? That was your pump station sending me its secrets."
+      },
+      {
+        "speaker": "WIRETAP",
+        "portrait": "boss_wiretap_sneaky",
+        "text": "I am WIRETAP. I don't need to break encryption - there isn't any. I just... listen. And speak."
+      },
+      {
+        "speaker": "BLAZE",
+        "portrait": "blaze_angry",
+        "text": "You've been manipulating equipment. Playing with an oil refinery like it's a toy!"
+      },
+      {
+        "speaker": "WIRETAP",
+        "portrait": "boss_wiretap_amused",
+        "text": "Playing? I've been LEARNING. Every Modbus register. Every DNP3 point. I know your process better than your operators."
+      },
+      {
+        "speaker": "WIRETAP",
+        "portrait": "boss_wiretap_amused",
+        "text": "Function code 5 - write single coil. Function code 6 - write single register. Function code 16 - write multiple registers. Shall I demonstrate?"
+      },
+      {
+        "speaker": "CIPHER",
+        "portrait": "cipher_determined",
+        "text": "You know protocols. Let's see if you know how to defend against someone who understands them too."
+      },
+      {
+        "speaker": "NARRATOR",
+        "portrait": null,
+        "text": "[BOSS BATTLE: WIRETAP - Protocol Exploiter] [30-second timer per question!]"
+      }
+    ]
+  },
+  "bossDefeat": {
+    "dialogue": [
+      {
+        "speaker": "WIRETAP",
+        "portrait": "boss_wiretap_frustrated",
+        "text": "No! The protocols were PERFECT attack vectors! No authentication! No encryption! How did you--"
+      },
+      {
+        "speaker": "GHOST",
+        "portrait": "ghost_satisfied",
+        "text": "The protocols are weak. But the DEFENDERS aren't. Knowing the vulnerabilities means knowing how to watch for exploitation."
+      },
+      {
+        "speaker": "WIRETAP",
+        "portrait": "boss_wiretap_damaged",
+        "text": "*connection degrading* This isn't over... The Null Syndicate has greater plans... Null Prime is coming..."
+      },
+      {
+        "speaker": "WIRETAP",
+        "portrait": "boss_wiretap_damaged",
+        "text": "They don't just understand networks and protocols... they understand EVERYTHING... nation-state level..."
+      },
+      {
+        "speaker": "VOLT",
+        "portrait": "volt_concerned",
+        "text": "Null Prime? That sounds like their leader. An APT-level threat."
+      },
+      {
+        "speaker": "CIPHER",
+        "portrait": "cipher_thinking",
+        "text": "We've stopped a script kiddie, a network infiltrator, and a protocol exploiter. If Null Prime is coming... we need to be ready for something much worse."
+      },
+      {
+        "speaker": "BLAZE",
+        "portrait": "blaze_determined",
+        "text": "Then we train. We prepare. We learn everything we can about ICS security."
+      },
+      {
+        "speaker": "NARRATOR",
+        "portrait": null,
+        "text": "[PROTOCOL PORT COMPLETE - MVP Campaign Finished!]"
+      },
+      {
+        "speaker": "NARRATOR",
+        "portrait": null,
+        "text": "[Thank you for playing ICS Defender Chronicles! Future updates will add Supervisory Station, Governance Garrison, and the Final Fortress.]"
+      }
+    ]
+  },
+  "epilogue": {
+    "dialogue": [
+      {
+        "speaker": "CIPHER",
+        "portrait": "cipher_neutral",
+        "text": "Three cities secured. Three Null Syndicate operatives neutralized. But this was just the beginning."
+      },
+      {
+        "speaker": "VOLT",
+        "portrait": "volt_teaching",
+        "text": "You've learned the fundamentals - what ICS is, how networks should be architected, why protocols are vulnerable."
+      },
+      {
+        "speaker": "GHOST",
+        "portrait": "ghost_mysterious",
+        "text": "But there's more. Windows systems. Linux hardening. Governance and compliance. Incident response."
+      },
+      {
+        "speaker": "BLAZE",
+        "portrait": "blaze_hopeful",
+        "text": "The fight to protect critical infrastructure never ends. But now you're equipped to join it."
+      },
+      {
+        "speaker": "CIPHER",
+        "portrait": "cipher_proud",
+        "text": "Welcome to CyberGuard, defender. The world's critical infrastructure is counting on people like you."
+      },
+      {
+        "speaker": "NARRATOR",
+        "portrait": null,
+        "text": "[End of MVP Campaign - Continue learning with SANS ICS410!]"
+      }
+    ]
+  }
+}
